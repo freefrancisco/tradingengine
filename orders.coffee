@@ -1,3 +1,4 @@
+# single order logic
 class Order extends Model
   dateString: -> 
     new Date(@date)
@@ -6,6 +7,7 @@ class Bid extends Order
   
 class Ask extends Order
 
+# multiple orders collection logic
 class @Orders extends Minimongoid
   @_collection = new Meteor.Collection "orders", 
     transform: (doc) -> 
@@ -30,19 +32,21 @@ class @Orders extends Minimongoid
     console.log 'bids', bids
     [bids, asks]
     
-  
-
-if Meteor.isServer
-  console.log "orders: #{Orders.count()}"
-  if Orders.count() is 0 
-    console.log "seeding orders with dummy data for now"
-    for ticker, index in ["pinterest", "tokbox", "meteor", "twitter"]
-      for i in [1..4]
-        Orders.create ticker: ticker, type: 'bid', price: 100 - i - (index+1)*2, quantity: 1, date: Date.now()
-        Orders.create ticker: ticker, type: 'ask', price: 100 + i + (index+1)*2, quantity: 1, date: Date.now()
+  @generateTestData: -> # Remove this later for production
+    console.log "There are #{@count()} orders in database right now"
+    if Meteor.isServer and @count() is 0
+      console.log "seeding orders with dummy data"
+      for ticker, index in ["pinterest", "tokbox", "meteor", "twitter"]
+        for i in [1..4]
+          Orders.create ticker: ticker, type: 'bid', price: 100 - i - (index+1)*2, quantity: 1, date: Date.now()
+          Orders.create ticker: ticker, type: 'ask', price: 100 + i + (index+1)*2, quantity: 1, date: Date.now()
       
+    
+if Meteor.isServer
+  Orders.generateTestData()
+  
+  
 if Meteor.isClient
-  console.log "client"
   # Orders = Meteor.subscribe "orders"
   
   Template.orders.helpers
