@@ -3,8 +3,28 @@
 </head>
 
 <body>
-	{{> orders}}
+	<div class="row-fluid">
+		<div class="span3">
+			{{>navigation}}
+		</div>
+		<div class="span9">
+			{{renderPage}}
+		</div>
+	</div>
 </body>
+
+<template name="navigation">
+	<ul>
+		<li>	{{loginButtons}} </li>
+		<li><a href="/">Home</a></li>
+		<li><a href="/orders">All Orders</a></li>
+	</ul>
+</template>
+
+<template name="home">
+	<h1> Trading Engine </h1>
+	<p> Welcome to the Trading Engine, click around on the nav links to go to different areas in the site </p>
+</template>
 
 <template name="orders">
 	<table class="table">
