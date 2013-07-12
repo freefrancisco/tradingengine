@@ -9,3 +9,5 @@ preserve-inputs
 coffeescript
 bootstrap
 underscore
+accounts-ui
+accounts-google

@@ -15,6 +15,7 @@
 
 <template name="navigation">
 	<ul>
+		<li> {{{fillerImage width='200' height='150'}}} </li>
 		<li>	{{loginButtons}} </li>
 		<li><a href="/">Home</a></li>
 		<li><a href="/orders">All Orders</a></li>
@@ -22,26 +23,24 @@
 </template>
 
 <template name="home">
+	{{{fillerImage width='700' height='150'}}}
 	<h1> Trading Engine </h1>
 	<p> Welcome to the Trading Engine, click around on the nav links to go to different areas in the site </p>
+	<p> {{{fillerText}}} </p>
 </template>
 
 <template name="orders">
+	{{{fillerImage width='700' height='150'}}}
 	<table class="table">
-		<tr>
-			<th>Ticker</th>
-			<th>Type </th>
-			<th>Price</th>
-			<th>Quantity</th>
-			<th>Date</th>
-		</tr>
-		{{#each all}}
+		{{> order}}
+		{{#each all 'twitter' foo='bar'}}
 			{{> order}}
 		{{/each}}
 	</table>
 </template>
 
 <template name="order">
+	{{#if ticker}}
 	<tr>
 		<td> {{ticker}} </td>
 		<td> {{type}} </td>
@@ -49,4 +48,13 @@
 		<td> {{quantity}} </td>
 		<td> {{dateString}} </td>
 	</tr>
+	{{else}}
+	<tr>
+		<th>Ticker</th>
+		<th>Type </th>
+		<th>Price</th>
+		<th>Quantity</th>
+		<th>Date</th>
+	</tr>
+	{{/if}}
 </template>
